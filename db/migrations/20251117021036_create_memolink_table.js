@@ -7,8 +7,8 @@ exports.up = function (knex) {
     table.increments('id').primary();
     table.string('linkUri').notNullable();
     table.string('memo', 255);
-    table.datetime('createdAt').notNullable();
-    table.datetime('updatedAt').notNullable();
+    table.timestamp('createdAt').notNullable().defaultTo(knex.fn.now());
+    table.timestamp('updatedAt').notNullable().defaultTo(knex.fn.now());
   });
 };
 

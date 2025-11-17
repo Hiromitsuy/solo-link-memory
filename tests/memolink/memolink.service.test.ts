@@ -36,13 +36,13 @@ describe('memolink service', () => {
   describe('create', () => {
     it('新しいMemoLinkを追加する', () => {
       const insertSpy = vi.spyOn(mockRepos, 'create');
-      const nowDatetimeString = Date.now().toLocaleString();
+      const nowDatetime = new Date();
       const newMemoLink: MemoLink = {
         id: 1,
         linkUri: 'https://example.com/',
         memo: 'sample memo',
-        created_at: nowDatetimeString,
-        updated_at: nowDatetimeString,
+        createdAt: nowDatetime,
+        updatedAt: nowDatetime,
       };
       service.create(newMemoLink);
 

@@ -7,12 +7,12 @@ class MockMemoLinkService extends MemoLinkService {
   constructor() {
     super(null);
   }
-  list() {
+  list = () => {
     return null;
-  }
-  create() {
+  };
+  create = () => {
     return null;
-  }
+  };
 }
 
 describe('memolint controller', () => {

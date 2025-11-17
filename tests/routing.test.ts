@@ -2,6 +2,13 @@ import { describe, it, expect, vi } from 'vitest';
 import setupRouting from '../src/routing';
 import express from 'express';
 
+vi.mock('./knex', () => {
+  return {
+    __esModule: true, // ES Module として扱う場合に必要
+    default: vi.fn(),
+  };
+});
+
 describe('routing', () => {
   const mockApp = {
     get: vi.fn(),

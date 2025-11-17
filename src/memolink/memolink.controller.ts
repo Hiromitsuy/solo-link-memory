@@ -9,21 +9,19 @@ export default class MemoLinkController {
     this.service = service;
   }
 
-  async get(req: Request, res: Response) {
-    const list = this.service.list();
+  get = async (req: Request, res: Response) => {
+    const list = await this.service.list();
     res.json(list);
-  }
+  };
 
-  async post(req: Request, res: Response) {
+  post = async (req: Request, res: Response) => {
     const newData: MemoLink = {
-      id: 0,
+      id: undefined,
       linkUri: req.body.linkUri,
       memo: req.body.memo,
-      created_at: Date.now().toLocaleString(),
-      updated_at: Date.now().toLocaleString(),
     };
 
     const createdItem = await this.service.create(newData);
     res.status(201).json(createdItem);
-  }
+  };
 }
