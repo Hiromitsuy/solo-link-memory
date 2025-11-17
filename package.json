@@ -1,5 +1,5 @@
 {
-  "name": "link-note",
+  "name": "memo-link",
   "version": "1.0.0",
   "description": "memorise interested links and share comments application",
   "main": "index.js",
@@ -13,10 +13,19 @@
     "build": "echo please-set-command-at-later",
     "start": "echo please-set-command-at-later",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:migrate": "knex migrate:latest",
+    "db:migrate-make": "knex migrate:make",
+    "db:seed": "knex seed:run",
+    "db:seed-make": "knex seed:make",
+    "db:reset": "knex migrate:rollback --all && knex migrate:latest && knex seed:run"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "knex": "^3.1.0",
+    "pg": "^8.16.3",
+    "postgres": "^3.4.7"
   },
   "devDependencies": {
     "@types/express": "^5.0.5",
