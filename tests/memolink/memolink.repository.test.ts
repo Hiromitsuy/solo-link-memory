@@ -1,20 +1,18 @@
 import { describe, it, expect, vi } from 'vitest';
-import createMemoLinkRepository from '../../src/memolink/memolink.repository';
-import { afterEach, beforeEach } from 'node:test';
+import createMemoLinkRepository from '@/memolink/memolink.repository';
+import MemoLink from '@/model/MemoLinkModel';
+import { afterEach } from 'node:test';
 import { Knex } from 'knex';
 
 describe('memolink reposotory', () => {
-  const knexMock = {
-    select: function () {
-      return this;
-    },
-    from: function () {
-      return this;
-    },
-    limit: function (limit: number) {
-      return this;
-    },
+  const knexMock = function (tablename: string) {
+    return knexMock;
   };
+  knexMock.select = () => knexMock;
+  knexMock.from = () => knexMock;
+  knexMock.limit = (limit: number) => knexMock;
+  knexMock.insert = (payload: object) => knexMock;
+
   let reposotory = createMemoLinkRepository(knexMock as unknown as Knex);
 
   afterEach(() => {
@@ -46,6 +44,19 @@ describe('memolink reposotory', () => {
   });
 
   describe('create', () => {
-    it('');
+    it('新しいMemoLinkオブジェクトをDBに追加する', async () => {
+      const insertSpy = vi.spyOn(knexMock, 'insert');
+      const nowDatetimeString = Date.now().toLocaleString();
+      const newMemoLink: MemoLink = {
+        id: 1,
+        linkUri: 'https://example.com/',
+        memo: 'sample memo',
+        created_at: nowDatetimeString,
+        updated_at: nowDatetimeString,
+      };
+      await reposotory.create(newMemoLink);
+
+      expect(insertSpy).toHaveBeenCalledWith(newMemoLink);
+    });
   });
 });

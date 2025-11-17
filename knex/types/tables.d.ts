@@ -1,14 +1,6 @@
 import { Knex } from 'knex';
 
-declare module 'knex/types/tables' {
-  interface MemoLink {
-    id: number;
-    linkUri: string;
-    memo: string;
-    created_at: string;
-    updated_at: string;
-  }
-}
+declare module 'knex/types/tables' {}
 
 // declare module 'knex/types/tables' {
 //   interface User {
