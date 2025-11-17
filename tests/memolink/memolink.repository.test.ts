@@ -1,7 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
-import createMemoLinkRepository from '@/memolink/memolink.repository';
+import { describe, afterEach, it, expect, vi } from 'vitest';
+import MemoLinkRepository from '@/memolink/memolink.repository';
 import MemoLink from '@/model/MemoLinkModel';
-import { afterEach } from 'node:test';
 import { Knex } from 'knex';
 
 describe('memolink reposotory', () => {
@@ -13,7 +12,7 @@ describe('memolink reposotory', () => {
   knexMock.limit = (limit: number) => knexMock;
   knexMock.insert = (payload: object) => knexMock;
 
-  let reposotory = createMemoLinkRepository(knexMock as unknown as Knex);
+  let reposotory = new MemoLinkRepository(knexMock as unknown as Knex);
 
   afterEach(() => {
     vi.resetAllMocks();

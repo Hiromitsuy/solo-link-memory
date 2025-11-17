@@ -1,22 +1,19 @@
 import { Knex } from 'knex';
 import MemoLink from '@/model/MemoLinkModel';
 
-/**
- * Create connection to database and control data in memolink table.
- * @param {import("knex").Knex} knex
- * @param {string} table
- * @returns Repository
- */
-export default function createMemoLinkRepository(
-  knex: Knex,
-  table = 'memolink'
-) {
-  const list = async (limit = 20) => {
-    return await knex.select().from(table).limit(limit);
-  };
+export default class MemoLinkRepository {
+  knex: Knex;
+  table: string;
 
-  const create = async (memolink: MemoLink) => {
-    return await knex(table).insert(memolink);
-  };
-  return { list, create };
+  constructor(knex, table = 'memolink') {
+    this.knex = knex;
+    this.table = table;
+  }
+
+  async list(limit = 20) {
+    return await this.knex.select<MemoLink[]>().from(this.table).limit(limit);
+  }
+  async create(memolink: MemoLink) {
+    return await this.knex(this.table).insert(memolink);
+  }
 }
