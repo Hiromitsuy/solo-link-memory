@@ -1,11 +1,12 @@
 import Express from 'express';
+import setupRouting from './routing';
 
 const PORT = process.env.PORT || 3000;
 
 function createServer() {
   const app = Express();
 
-  app.get('/api', (_req, res) => res.send('hello world'));
+  setupRouting(app);
   return app;
 }
 
