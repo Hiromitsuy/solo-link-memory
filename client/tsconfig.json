@@ -7,6 +7,7 @@
   "compilerOptions": {
     "paths": {
       "@root/*": ["./*"],
+      "@server/*": ["../src/*"],
       "@/*": ["./src/*"]
     }
   }
