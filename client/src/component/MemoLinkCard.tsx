@@ -7,7 +7,7 @@ type Props = {
 
 export default function MemoLinkCard({ memolink }: Props) {
   return (
-    <Card>
+    <Card style={{ marginBottom: '1em' }}>
       <Typography.Title level={3}>リンク先タイトル</Typography.Title>
       <Row>
         <Col span={12}>
