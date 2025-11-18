@@ -2,13 +2,9 @@ import { LinkOutlined, SendOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, Space } from 'antd';
 export default function MemoLinkForm() {
   return (
-    <Card>
+    <Card style={{ padding: '1em' }}>
       <h2 style={{ marginBottom: '1em' }}>リンクをメモ</h2>
-      <Form
-        layout="vertical"
-        autoComplete="off"
-        // style={{ padding: '1.5em', border: '1px solid #ccc', borderRadius: 6 }}
-      >
+      <Form layout="vertical" autoComplete="off">
         <Form.Item name={'linkUri'} label="リンクURL">
           <Space.Compact style={{ width: '100%' }}>
             <Space.Addon>

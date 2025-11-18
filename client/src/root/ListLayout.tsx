@@ -1,6 +1,8 @@
 import useSWR from 'swr';
 import { fetcherJson } from '../controller/fetcher';
 import type MemoLink from '@server/model/MemoLinkModel';
+import { Col, Row } from 'antd';
+import MemoLinkCard from '../component/MemoLinkCard';
 export default function ListLayout() {
   const memolinkFetch = useSWR<MemoLink[], string>(
     '/api/memolink',
@@ -15,17 +17,16 @@ export default function ListLayout() {
       </div>
     );
   }
-  console.log(memolinks);
   return (
-    <>
-      {memolinks &&
-        memolinks.map((data, key) => (
-          <div key={key}>
-            <h2>{data.id}</h2>
-            <p>{data.linkUri}</p>
-            <p>{data.memo}</p>
-          </div>
-        ))}
-    </>
+    <div style={{ marginTop: '2em' }}>
+      <Row gutter={16}>
+        {memolinks &&
+          memolinks.map((data, key) => (
+            <Col key={key} className="gutter-row" span={12}>
+              <MemoLinkCard memolink={data} />
+            </Col>
+          ))}
+      </Row>
+    </div>
   );
 }
