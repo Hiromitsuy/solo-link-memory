@@ -12,6 +12,10 @@ class MemoLinkService {
     return limit ? this.repos.list(limit) : this.repos.list();
   }
 
+  findById(id: number) {
+    return this.repos.find(id);
+  }
+
   create(newMemoLink: MemoLink) {
     return this.repos.create(newMemoLink);
   }

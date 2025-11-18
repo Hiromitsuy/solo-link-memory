@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, Mock } from 'vitest';
 import setupRouting from '../src/routing';
 import express from 'express';
 
@@ -16,8 +16,22 @@ describe('routing', () => {
   };
   setupRouting(mockApp as unknown as express.Express);
 
-  it('exist GET/api/memolinks', () => {
+  it('GET /api/memolinks', () => {
     expect(mockApp.get).toHaveBeenCalledWith(
+      '/api/memolink',
+      expect.any(Function)
+    );
+  });
+
+  it('GET /api/memolinks/:id', () => {
+    expect(mockApp.get).toHaveBeenCalledWith(
+      '/api/memolink/:id',
+      expect.any(Function)
+    );
+  });
+
+  it('POST /api/memolinks', () => {
+    expect(mockApp.post).toHaveBeenCalledWith(
       '/api/memolink',
       expect.any(Function)
     );

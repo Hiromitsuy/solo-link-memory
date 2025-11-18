@@ -14,10 +14,16 @@ export default class MemoLinkRepository {
     return await this.knex<MemoLink>(this.table).select().limit(limit);
   }
 
+  async find(id) {
+    return await this.knex<MemoLink>(this.table).first().where('id', id);
+  }
+
   async create(memolink: MemoLink) {
     memolink.createdAt = new Date();
     memolink.updatedAt = new Date();
-    await this.knex(this.table).insert(memolink);
+    const createdId = await this.knex(this.table)
+      .returning('id')
+      .insert(memolink);
     return;
   }
 }

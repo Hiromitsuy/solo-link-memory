@@ -7,6 +7,7 @@ export default function setupRouting(app: express.Express) {
   const memolink = createMemoLinkActions(knex);
 
   app.get('/api/memolink', memolink.get);
+  app.get('/api/memolink/:id', memolink.getById);
   app.post('/api/memolink', memolink.post);
 
   return app;

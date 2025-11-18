@@ -14,6 +14,15 @@ export default class MemoLinkController {
     res.json(list);
   };
 
+  getById = async (req: Request, res: Response) => {
+    if (req.params.id) {
+      const data = await this.service.findById(Number(req.params.id));
+      return res.json(data);
+    } else {
+      throw new Error('Target MemoLink Id is undefined');
+    }
+  };
+
   post = async (req: Request, res: Response) => {
     const newData: MemoLink = {
       id: undefined,
