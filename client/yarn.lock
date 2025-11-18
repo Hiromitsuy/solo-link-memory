@@ -434,6 +434,16 @@
     "@eslint/core" "^0.17.0"
     levn "^0.4.1"
 
+"@fontsource/delius-unicase@^5.2.8":
+  version "5.2.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/delius-unicase/-/delius-unicase-5.2.8.tgz#62677d23e18073e22b4b2955bf37ae78b4721470"
+  integrity sha512-2tgHw8PLfeocvU3Et9iEcugVMEpAYMaGS4SKpLoArvbtRH1JcyDkrQyFf25rlv+9yysFWFh6OgwXHdaedwO5SQ==
+
+"@fontsource/noto-sans-jp@^5.2.8":
+  version "5.2.8"
+  resolved "https://registry.yarnpkg.com/@fontsource/noto-sans-jp/-/noto-sans-jp-5.2.8.tgz#3cdea3b042f0e3d7b385460c205f1ff8bac75d36"
+  integrity sha512-ngWXPtSV3XH8ZmNX9hnfeQ+x/3mCoaAOA3BVDcyS5jQdh4FYqKjf/S9tEUEYDPwGa2pULJVXTO2+oFg42gWvSw==
+
 "@fontsource/noto-sans@^5.2.10":
   version "5.2.10"
   resolved "https://registry.yarnpkg.com/@fontsource/noto-sans/-/noto-sans-5.2.10.tgz#74476071b53fda1554ac009b98f18d763d0f7135"
