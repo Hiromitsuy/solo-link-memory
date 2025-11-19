@@ -11,13 +11,15 @@ export default class MemoLinkController {
 
   get = async (req: Request, res: Response) => {
     const list = await this.service.list();
+    res.setHeader('Content-Type', 'application/json');
     res.json(list);
   };
 
   getById = async (req: Request, res: Response) => {
     if (req.params.id) {
       const data = await this.service.findById(Number(req.params.id));
-      return res.json(data);
+      res.setHeader('Content-Type', 'application/json');
+      res.json(data);
     } else {
       throw new Error('Target MemoLink Id is undefined');
     }
@@ -31,6 +33,7 @@ export default class MemoLinkController {
     };
 
     const createdItem = await this.service.create(newData);
-    res.status(201).json(createdItem);
+    res.setHeader('Content-Type', 'application/json');
+    res.status(201).json({ data: createdItem });
   };
 }

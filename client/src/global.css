@@ -13,7 +13,8 @@
 
 body,
 #root {
-  height: inherit;
+  min-height: inherit;
+  height: max-content;
   margin: 0;
 }
 

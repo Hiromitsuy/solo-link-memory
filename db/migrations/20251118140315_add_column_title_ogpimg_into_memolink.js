@@ -6,7 +6,7 @@ exports.up = function (knex) {
   return knex.schema.table('memolink', (table) => {
     table.string('linkTitle');
     table.string('linkDescription', 2048);
-    table.string('ogpUri', 2048);
+    table.string('ogpUri', 4096);
     table.string('siteName');
   });
 };

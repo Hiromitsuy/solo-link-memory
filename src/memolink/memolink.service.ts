@@ -29,8 +29,8 @@ class MemoLinkService {
       linkDescription: description,
       ogpUri,
     };
-
-    return await this.repos.create(saveData);
+    const created = await this.repos.create(saveData);
+    return created;
   }
 }
 

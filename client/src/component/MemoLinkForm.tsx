@@ -1,5 +1,6 @@
 import { LinkOutlined, SendOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, Space } from 'antd';
+import { useEffect } from 'react';
 import useSWRMutation from 'swr/mutation';
 
 type MemoLinkField = {
@@ -28,8 +29,11 @@ export default function MemoLinkField() {
   const [form] = Form.useForm();
   const { trigger, isMutating } = useSWRMutation('/api/memolink', postRequest);
 
-  const onSubmit = (values: MemoLinkField) =>
-    trigger(values).then(form.resetFields);
+  const onSubmit = (values: MemoLinkField) => trigger(values);
+
+  useEffect(() => {
+    if (!isMutating) form.resetFields();
+  }, [isMutating, form]);
 
   return (
     <Card style={{ padding: '1em' }}>
