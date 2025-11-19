@@ -20,7 +20,7 @@ export default function ListLayout() {
     );
   }
   return (
-    <Flex style={{ marginTop: '2em' }} gap={'2em'} vertical>
+    <Flex style={{ marginTop: '2em', width: '100%' }} gap={'2em'} vertical>
       <MemoLinkForm />
       <Row gutter={16}>
         {memolinks &&
