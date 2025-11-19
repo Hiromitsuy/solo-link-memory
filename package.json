@@ -10,7 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "coverage": "vitest run --coverage",
-    "build": "cd client && yarn && yarn build && rm -rf ../public && mv dist ../public",
+    "build": "yarn && cd client && yarn && yarn build && rm -rf ../public && mv dist ../public",
     "start": "tsx src/server.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
