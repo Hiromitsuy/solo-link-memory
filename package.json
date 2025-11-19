@@ -10,7 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest watch",
     "coverage": "vitest run --coverage",
-    "build": "cd client && yarn build && rm -rf ../public && mv dist ../public",
+    "build": "cd client && yarn && yarn build && rm -rf ../public && mv dist ../public",
     "start": "tsx src/server.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -26,7 +26,8 @@
     "jsdom": "^27.2.0",
     "knex": "^3.1.0",
     "pg": "^8.16.3",
-    "postgres": "^3.4.7"
+    "postgres": "^3.4.7",
+    "tsx": "^4.20.6"
   },
   "devDependencies": {
     "@types/express": "^5.0.5",
@@ -38,7 +39,6 @@
     "nodemon": "^3.1.11",
     "prettier": "^3.6.2",
     "tsc": "^2.0.4",
-    "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^4.0.9"
   }
