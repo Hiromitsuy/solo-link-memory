@@ -4,15 +4,8 @@ import type MemoLink from '@server/model/MemoLinkModel';
 import { Col, Flex, Row } from 'antd';
 import MemoLinkCard from '../component/MemoLinkCard';
 import MemoLinkForm from '../component/MemoLinkForm';
-import useAuthContext from '../component/AuthContext';
-import { redirect } from 'react-router';
 
 export default function ListLayout() {
-  const { authInfo } = useAuthContext();
-
-  console.log(authInfo);
-  if (!authInfo) redirect('/signin');
-
   const memolinkFetch = useSWR<MemoLink[], string>(
     '/api/memolink',
     fetcherJson

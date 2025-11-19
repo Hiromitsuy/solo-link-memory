@@ -1,8 +1,9 @@
 import { auth } from '@/controller/auth';
+import useAuthContext from '@/component/AuthContext';
 import { Button, Card, Col, Flex, Form, Input, Row, Typography } from 'antd';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, Navigate, redirect } from 'react-router';
 
 type SignInFieldType = {
   email?: string;
@@ -14,13 +15,15 @@ export default function SignIn() {
   const [isSiginError, setSiginError] = useState(false);
   const [submittable, setSubmittable] = useState<boolean>(false);
   const values = Form.useWatch([], form);
+  const { authInfo } = useAuthContext();
 
   const handleSubmit = async (values: SignInFieldType) => {
     const { email, password } = values;
     if (!email || !password) return;
 
     try {
-      signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
+      return redirect('/');
     } catch {
       setSiginError(true);
     }
@@ -32,6 +35,8 @@ export default function SignIn() {
       .then(() => setSubmittable(true))
       .catch(() => setSubmittable(false));
   }, [form, values]);
+
+  if (!authInfo) return <Navigate to={'/'} />;
 
   return (
     <Card style={{ margin: '2em', width: '100%' }}>
