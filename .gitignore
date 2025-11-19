@@ -144,5 +144,5 @@ dist
 # Manual setting
 dist/
 public/
-
+*/*/serviceAccountKey.json
 # End of https://www.toptal.com/developers/gitignore/api/node
