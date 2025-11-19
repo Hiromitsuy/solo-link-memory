@@ -16,7 +16,7 @@ import '@fontsource/noto-sans-jp/300.css';
 import '@fontsource/noto-sans-jp/400.css';
 import '@fontsource/noto-sans-jp/500.css';
 import '@fontsource/noto-sans-jp/700.css';
-import '@fontsource/delius-unicase';
+import '@fontsource/delius-unicase/400.css';
 import './global.css';
 import AppHeader from './component/AppHeader';
 

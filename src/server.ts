@@ -8,6 +8,7 @@ function createServer() {
   app.use(Express.json());
   app.use(Express.urlencoded({ extended: true }));
   setupRouting(app);
+  app.use('/', Express.static('./public'));
   return app;
 }
 

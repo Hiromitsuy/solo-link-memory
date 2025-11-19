@@ -143,5 +143,6 @@ dist
 
 # Manual setting
 dist/
+public/
 
 # End of https://www.toptal.com/developers/gitignore/api/node
