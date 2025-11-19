@@ -17,7 +17,6 @@ const initForm: MemoLinkField = {
 };
 
 const postRequest = (url: string, { arg }: { arg: MemoLinkField }) => {
-  console.log(arg);
   return fetch(url, {
     method: 'POST',
     headers: {
@@ -45,7 +44,7 @@ export default function MemoLinkField() {
     authInfo?.getIdToken().then((token) => {
       form.setFieldValue('authToken', token);
     });
-  });
+  }, [authInfo, form]);
 
   return (
     <Card style={{ padding: '1em' }}>

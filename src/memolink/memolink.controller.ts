@@ -1,20 +1,7 @@
+import { AuthRequest } from '../middleware/auth';
 import MemoLink from '../model/MemoLinkModel';
 import MemoLinkService from './memolink.service';
 import { Response, Request } from 'express';
-
-interface AuthedRequest extends Request {
-  user: {
-    iss: string;
-    aud: string;
-    auth_time: number;
-    user_id: string;
-    sub: string;
-    iat: number;
-    exp: number;
-    email: string;
-    email_verified: string;
-  };
-}
 
 export default class MemoLinkController {
   service: MemoLinkService;
@@ -23,8 +10,13 @@ export default class MemoLinkController {
     this.service = service;
   }
 
-  get = async (req: Request, res: Response) => {
-    const list = await this.service.list();
+  get = async (req: AuthRequest, res: Response) => {
+    const list = await this.service.list({
+      userId: req.user.user_id,
+      sortByLatest: true,
+      includePublic: true,
+    });
+    console.log(list);
     res.setHeader('Content-Type', 'application/json');
     res.json(list);
   };
@@ -39,7 +31,7 @@ export default class MemoLinkController {
     }
   };
 
-  post = async (req: AuthedRequest, res: Response) => {
+  post = async (req: AuthRequest, res: Response) => {
     const newData: MemoLink = {
       id: 0,
       linkUri: req.body.linkUri,
@@ -47,8 +39,10 @@ export default class MemoLinkController {
       userId: req.user.user_id,
       isPublic: false,
     };
+    console.log(newData, req.user);
 
     const createdItem = await this.service.create(newData);
+    console.log(createdItem);
     res.setHeader('Content-Type', 'application/json');
     res.status(201).json({ data: createdItem });
   };

@@ -2,6 +2,13 @@ import MemoLink from '@/model/MemoLinkModel';
 import MemoLinkRepository from './memolink.repository';
 import getHeadOfLink from '@/tools/getHeadOfLink';
 
+type ListArg = {
+  userId?: string;
+  includePublic?: boolean;
+  sortByLatest?: boolean;
+  limit?: number;
+};
+
 class MemoLinkService {
   private repos: MemoLinkRepository;
 
@@ -9,8 +16,8 @@ class MemoLinkService {
     this.repos = repos;
   }
 
-  async list(limit?: number) {
-    return limit ? await this.repos.list(limit) : await this.repos.list();
+  async list({ limit }: ListArg) {
+    return await this.repos.list({ limit });
   }
 
   async findById(id: number) {

@@ -3,21 +3,14 @@ import type MemoLink from '@server/model/MemoLinkModel';
 import { Col, Flex, Row } from 'antd';
 import MemoLinkCard from '../component/MemoLinkCard';
 import MemoLinkForm from '../component/MemoLinkForm';
-import useAuthContext from '../component/AuthContext';
 
+const fetcherJson = (url: string) => fetch(url).then((r) => r.json());
 export default function ListLayout() {
-  const { authInfo } = useAuthContext();
   const memolinkFetch = useSWR<MemoLink[], string>(
     '/api/memolink',
-    async (url: string) => {
-      const token = await authInfo?.getIdToken();
-      return fetch(url, {
-        headers: {
-          Authorization: 'Bearer ' + token,
-        },
-      }).then((res) => res.json());
-    }
+    fetcherJson
   );
+  const memolinks = memolinkFetch.data;
 
   if (memolinkFetch.error) {
     return (
@@ -26,11 +19,8 @@ export default function ListLayout() {
       </div>
     );
   }
-
-  const memolinks = memolinkFetch.data;
-
   return (
-    <Flex style={{ marginTop: '2em', width: '100%' }} gap={'2em'} vertical>
+    <Flex style={{ marginTop: '2em' }} gap={'2em'} vertical>
       <MemoLinkForm />
       <Row gutter={16}>
         {memolinks &&

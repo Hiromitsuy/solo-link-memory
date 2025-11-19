@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { auth } from '../config/firebase-admin';
 
 // リクエストにユーザー情報を検証するための型定義
-interface AuthRequest extends Request {
+export interface AuthRequest extends Request {
   user?: any;
 }
 
