@@ -1,6 +1,6 @@
-import MemoLinkController from '@root/src/memolink/memolink.controller';
-import MemoLinkService from '@root/src/memolink/memolink.service';
-import MemoLink from '@root/src/model/MemoLinkModel';
+import MemoLinkController from '@/memolink/memolink.controller';
+import MemoLinkService from '@/memolink/memolink.service';
+import MemoLink from '@/model/MemoLinkModel';
 import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 class MockMemoLinkService extends MemoLinkService {
@@ -26,6 +26,9 @@ describe('memolinik controller', () => {
       return this;
     },
     json: function () {
+      return this;
+    },
+    setHeader: function () {
       return this;
     },
   };
@@ -81,7 +84,7 @@ describe('memolinik controller', () => {
     });
 
     it('IDの指定がなかったらエラーを返す', async () => {
-      const req = { params: {} };
+      const req = { params: {}, user: { user_id: '' } };
       try {
         await controller.getById(req as any, mockRes as any);
       } catch (e) {
@@ -98,11 +101,14 @@ describe('memolinik controller', () => {
           linkUri: 'https://example.com/',
           memo: 'sample memo',
         },
+        user: { user_id: '' },
       };
 
       const createRecordPayload = {
-        id: undefined,
+        id: 0,
         ...req.body,
+        userId: '',
+        isPublic: false,
       };
 
       await controller.post(req as any, mockRes as any);
@@ -114,6 +120,7 @@ describe('memolinik controller', () => {
         id: 2,
         linkUri: 'https://example.com/',
         memo: 'sample memo',
+        userId: '',
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -127,9 +134,12 @@ describe('memolinik controller', () => {
           linkUri: 'https://example.com/',
           memo: 'sample memo',
         },
+        user: { user_id: '' },
       };
       await controller.post(req as any, mockRes as any);
-      expect(spyResJson).toHaveBeenCalledExactlyOnceWith(createRecordPayload);
+      expect(spyResJson).toHaveBeenCalledExactlyOnceWith({
+        data: createRecordPayload,
+      });
       expect(spyResStatus).toHaveBeenCalledWith(201);
     });
   });

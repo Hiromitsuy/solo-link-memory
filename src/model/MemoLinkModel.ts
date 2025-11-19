@@ -6,6 +6,8 @@ export default interface MemoLink {
   linkDescription?: string;
   ogpUri?: string;
   memo: string;
+  userId: string;
+  isPublic: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }

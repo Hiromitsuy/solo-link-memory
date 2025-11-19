@@ -2,6 +2,20 @@ import MemoLink from '../model/MemoLinkModel';
 import MemoLinkService from './memolink.service';
 import { Response, Request } from 'express';
 
+interface AuthedRequest extends Request {
+  user: {
+    iss: string;
+    aud: string;
+    auth_time: number;
+    user_id: string;
+    sub: string;
+    iat: number;
+    exp: number;
+    email: string;
+    email_verified: string;
+  };
+}
+
 export default class MemoLinkController {
   service: MemoLinkService;
 
@@ -25,12 +39,13 @@ export default class MemoLinkController {
     }
   };
 
-  post = async (req: Request, res: Response) => {
-    console.log(req.user);
+  post = async (req: AuthedRequest, res: Response) => {
     const newData: MemoLink = {
       id: 0,
       linkUri: req.body.linkUri,
       memo: req.body.memo,
+      userId: req.user.user_id,
+      isPublic: false,
     };
 
     const createdItem = await this.service.create(newData);

@@ -1,4 +1,4 @@
-import getHeadOfLink from '@root/src/tools/getHeadOfLink';
+import getHeadOfLink from '@/tools/getHeadOfLink';
 import { describe, expect, it, vi } from 'vitest';
 
 import { JSDOM } from 'jsdom';

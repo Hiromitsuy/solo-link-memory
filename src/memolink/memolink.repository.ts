@@ -5,7 +5,7 @@ export default class MemoLinkRepository {
   knex: Knex;
   table: string;
 
-  constructor(knex, table = 'memolink') {
+  constructor(knex: Knex, table = 'memolink') {
     this.knex = knex;
     this.table = table;
   }
@@ -14,7 +14,7 @@ export default class MemoLinkRepository {
     return await this.knex<MemoLink>(this.table).select().limit(limit);
   }
 
-  async find(id) {
+  async find(id: number) {
     return await this.knex<MemoLink>(this.table).first().where('id', id);
   }
 

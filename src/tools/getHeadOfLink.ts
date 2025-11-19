@@ -17,10 +17,10 @@ export default async function getHeadOfLink(
   }
   const dom = await JSDOM.fromURL(targetUrl);
   const doc = dom.window.document;
-  const titleTag = doc.querySelector('title').text;
+  const titleTag = doc.querySelector('title')?.text;
 
   const metaTags = doc.querySelectorAll('meta');
-  const metaTagObject = {};
+  const metaTagObject: { [key: string]: string | null } = {};
   metaTags.forEach((meta) => {
     const name = meta.getAttribute('name');
     const property = meta.getAttribute('property');

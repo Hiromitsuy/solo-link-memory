@@ -33,6 +33,7 @@ describe('routing', () => {
   it('POST /api/memolinks', () => {
     expect(mockApp.post).toHaveBeenCalledWith(
       '/api/memolink',
+      expect.any(Function),
       expect.any(Function)
     );
   });
