@@ -16,8 +16,8 @@ class MemoLinkService {
     this.repos = repos;
   }
 
-  async list({ limit }: ListArg) {
-    return await this.repos.list({ limit });
+  async list(conditions: ListArg) {
+    return await this.repos.list(conditions);
   }
 
   async findById(id: number) {

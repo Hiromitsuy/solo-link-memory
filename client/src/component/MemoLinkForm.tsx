@@ -38,13 +38,10 @@ export default function MemoLinkField() {
 
   useEffect(() => {
     if (!isMutating) form.resetFields();
-  }, [isMutating, form]);
-
-  useEffect(() => {
     authInfo?.getIdToken().then((token) => {
       form.setFieldValue('authToken', token);
     });
-  }, [authInfo, form]);
+  }, [isMutating, form, authInfo]);
 
   return (
     <Card style={{ padding: '1em' }}>

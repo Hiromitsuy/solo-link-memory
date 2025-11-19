@@ -19,6 +19,7 @@ const mainContainerStyle: React.CSSProperties = {
   height: 'max-content',
   maxWidth: 980,
   margin: '0 auto',
+  padding: '0 2em',
 };
 
 export default function App() {

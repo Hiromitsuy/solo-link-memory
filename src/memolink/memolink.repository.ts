@@ -19,6 +19,7 @@ export default class MemoLinkRepository {
 
   async list({ userId, includePublic, sortByLatest, limit }: ListArg) {
     const query = this.knex<MemoLink>(this.table).select();
+    console.log({ userId, includePublic, sortByLatest, limit });
     if (userId) {
       query.where('userId', userId);
     }

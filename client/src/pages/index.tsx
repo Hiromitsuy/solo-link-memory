@@ -34,6 +34,7 @@ export default function ListLayout() {
       <MemoLinkForm />
       <Row gutter={16}>
         {memolinks &&
+          memolinks.length > 0 &&
           memolinks.map((data, key) => (
             <Col
               key={key}

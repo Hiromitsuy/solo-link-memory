@@ -72,11 +72,11 @@ export default function SignUp() {
                 style={{ width: 'max-content' }}
                 disabled={!submittable}
               >
-                ログイン
+                登録
               </Button>
               {isSiginError && (
                 <Typography.Text type="danger">
-                  ログインに失敗しました。
+                  サインアップに失敗しました。
                 </Typography.Text>
               )}
               <Typography.Text>
