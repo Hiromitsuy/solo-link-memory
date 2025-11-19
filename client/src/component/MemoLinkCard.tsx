@@ -9,19 +9,23 @@ export default function MemoLinkCard({ memolink }: Props) {
   return (
     <Card style={{ marginBottom: '1em' }}>
       <Typography.Title level={3}>{memolink.linkTitle}</Typography.Title>
-      <Row>
-        <Col span={12}>
-          <Image src="https://placehold.jp/150x150.png" />
-        </Col>
-        <Col span={12}>
-          <Flex gap={2} vertical>
-            <Typography.Link>
-              {new URL(memolink.linkUri).origin}
-            </Typography.Link>
-            <Typography.Text>{memolink.memo}</Typography.Text>
-          </Flex>
-        </Col>
-      </Row>
+      <Flex gap="middle">
+        <Image
+          src={memolink.ogpUri || 'https://placehold.jp/150x150.png'}
+          style={{
+            objectFit: 'cover',
+            width: '100%',
+            maxWidth: 150,
+            height: 150,
+            border: '1px solid #ccc',
+            borderRadius: 8,
+          }}
+        />
+        <Flex gap={4} vertical>
+          <Typography.Link>{new URL(memolink.linkUri).origin}</Typography.Link>
+          <Typography.Text>{memolink.memo}</Typography.Text>
+        </Flex>
+      </Flex>
     </Card>
   );
 }

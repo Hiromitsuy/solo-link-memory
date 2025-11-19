@@ -23,16 +23,17 @@ import AppHeader from './component/AppHeader';
 const root = document.getElementById('root')!;
 const layoutStyle: React.CSSProperties = {
   width: '100vw',
-  height: 'inherit',
+  height: 'max-content',
+  minHeight: '100%',
   fontFamily: 'NotoSans, Roboto, san-serif',
 };
 
 const mainContainerStyle: React.CSSProperties = {
   width: '100%',
-  height: 'inherit',
+  height: 'max-content',
   maxWidth: 980,
   padding: '2em',
-  margin: 'auto',
+  margin: '0 auto',
 };
 
 ReactDOM.createRoot(root).render(

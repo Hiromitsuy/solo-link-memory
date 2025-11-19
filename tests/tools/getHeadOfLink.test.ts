@@ -28,7 +28,6 @@ describe('getHeadOfLink', () => {
     await getHeadOfLink('http://example.com');
 
     expect(fetchSpy).toBeCalledWith('http://example.com');
-    //   'https://imageflux.sakura.ad.jp/column/ogp-images/',
   });
 
   it('get title in <title> on target page, description and ogpUri is not defined.', async () => {

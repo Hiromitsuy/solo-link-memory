@@ -22,7 +22,15 @@ export default function ListLayout() {
       <Row gutter={16}>
         {memolinks &&
           memolinks.map((data, key) => (
-            <Col key={key} className="gutter-row" span={12}>
+            <Col
+              key={key}
+              className="gutter-row"
+              xs={24}
+              sm={24}
+              md={24}
+              lg={12}
+              xl={12}
+            >
               <MemoLinkCard memolink={data} />
             </Col>
           ))}
