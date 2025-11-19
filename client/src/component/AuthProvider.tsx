@@ -18,6 +18,7 @@ export default function AuthProvider({
 
   useEffect(() => {
     const unsubscribed = auth.onAuthStateChanged((user) => {
+      console.log(user);
       setAuthInfo(user);
       setLoading(false);
     });

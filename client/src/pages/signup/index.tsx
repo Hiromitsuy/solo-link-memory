@@ -37,7 +37,7 @@ export default function SignUp() {
       .catch(() => setSubmittable(false));
   }, [form, values]);
 
-  if (!authInfo) return <Navigate to={'/'} />;
+  if (authInfo) return <Navigate to={'/'} />;
 
   return (
     <Card style={{ margin: '2em', width: '100%' }}>

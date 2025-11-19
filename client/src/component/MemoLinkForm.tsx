@@ -2,22 +2,27 @@ import { LinkOutlined, SendOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, Space } from 'antd';
 import { useEffect } from 'react';
 import useSWRMutation from 'swr/mutation';
+import useAuthContext from './AuthContext';
 
 type MemoLinkField = {
   linkUri: string;
   memo: string;
+  authToken: string;
 };
 
 const initForm: MemoLinkField = {
   linkUri: '',
   memo: '',
+  authToken: '',
 };
 
 const postRequest = (url: string, { arg }: { arg: MemoLinkField }) => {
+  console.log(arg);
   return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + arg.authToken,
     },
     body: JSON.stringify(arg),
   })
@@ -26,7 +31,8 @@ const postRequest = (url: string, { arg }: { arg: MemoLinkField }) => {
 };
 
 export default function MemoLinkField() {
-  const [form] = Form.useForm();
+  const { authInfo } = useAuthContext();
+  const [form] = Form.useForm<MemoLinkField>();
   const { trigger, isMutating } = useSWRMutation('/api/memolink', postRequest);
 
   const onSubmit = (values: MemoLinkField) => trigger(values);
@@ -34,6 +40,12 @@ export default function MemoLinkField() {
   useEffect(() => {
     if (!isMutating) form.resetFields();
   }, [isMutating, form]);
+
+  useEffect(() => {
+    authInfo?.getIdToken().then((token) => {
+      form.setFieldValue('authToken', token);
+    });
+  });
 
   return (
     <Card style={{ padding: '1em' }}>
@@ -75,6 +87,9 @@ export default function MemoLinkField() {
             showCount
             maxLength={255}
           />
+        </Form.Item>
+        <Form.Item<MemoLinkField> name="authToken" hidden>
+          <Input name="authToken" hidden />
         </Form.Item>
         <Button
           type="primary"
