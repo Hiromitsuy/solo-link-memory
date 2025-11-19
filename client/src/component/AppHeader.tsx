@@ -1,4 +1,5 @@
 import { Menu, Layout, Typography } from 'antd';
+import SingOutButton from './SignOutButton';
 const { Header } = Layout;
 
 export default function AppHeader() {
@@ -17,6 +18,7 @@ export default function AppHeader() {
         Memo LINK
       </Typography>
       <Menu theme="dark" mode="horizontal" style={{ flex: 1, minWidth: 0 }} />
+      <SingOutButton />
     </Header>
   );
 }
