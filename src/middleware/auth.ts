@@ -23,7 +23,7 @@ export const verifyAuth = async (
     // カスタムクレームのチェックがあれば追加
 
     // トークンを検証し、デコードされたユーザー情報を取得
-    const decodedToken = await auth.verifyIdToken(token);
+    const decodedToken = await auth.verifyIdToken(token.split(' ')[1]);
 
     // リクエストオブジェクトにユーザー情報を追加
     req.user = decodedToken;

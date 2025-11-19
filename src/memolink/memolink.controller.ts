@@ -26,8 +26,9 @@ export default class MemoLinkController {
   };
 
   post = async (req: Request, res: Response) => {
+    console.log(req.user);
     const newData: MemoLink = {
-      id: undefined,
+      id: 0,
       linkUri: req.body.linkUri,
       memo: req.body.memo,
     };
