@@ -5,8 +5,9 @@
 exports.up = function (knex) {
   return knex.schema.table('memolink', (table) => {
     table.string('linkTitle');
-    table.string('linkDescription');
-    table.string('ogpUri');
+    table.string('linkDescription', 2048);
+    table.string('ogpUri', 2048);
+    table.string('siteName');
   });
 };
 
@@ -19,5 +20,6 @@ exports.down = function (knex) {
     table.dropColumn('linkTitle');
     table.dropColumn('linkDescription');
     table.dropColumn('ogpUri');
+    table.dropColumn('siteName');
   });
 };

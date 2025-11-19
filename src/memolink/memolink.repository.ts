@@ -21,9 +21,7 @@ export default class MemoLinkRepository {
   async create(memolink: MemoLink) {
     memolink.createdAt = new Date();
     memolink.updatedAt = new Date();
-    const createdId = await this.knex(this.table)
-      .returning('id')
-      .insert(memolink);
-    return;
+    const created = await this.knex(this.table).returning('*').insert(memolink);
+    return created;
   }
 }

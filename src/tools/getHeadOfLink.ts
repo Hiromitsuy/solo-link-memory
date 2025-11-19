@@ -10,6 +10,11 @@ type HeadInfo = {
 export default async function getHeadOfLink(
   targetUrl: string
 ): Promise<HeadInfo> {
+  try {
+    new URL(targetUrl);
+  } catch (e) {
+    throw new Error('URL Parse Error');
+  }
   const dom = await JSDOM.fromURL(targetUrl);
   const doc = dom.window.document;
   const titleTag = doc.querySelector('title').text;
@@ -28,7 +33,7 @@ export default async function getHeadOfLink(
   });
 
   return {
-    title: metaTagObject['og:title'] || titleTag,
+    title: metaTagObject['og:title'] || titleTag || '',
     description: metaTagObject['og:description'] || '',
     ogpUri: metaTagObject['og:image'] || '',
     siteName: metaTagObject['og:site_name'] || '',

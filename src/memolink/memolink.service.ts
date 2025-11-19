@@ -1,5 +1,6 @@
 import MemoLink from '@/model/MemoLinkModel';
 import MemoLinkRepository from './memolink.repository';
+import getHeadOfLink from '@/tools/getHeadOfLink';
 
 class MemoLinkService {
   private repos: MemoLinkRepository;
@@ -8,16 +9,28 @@ class MemoLinkService {
     this.repos = repos;
   }
 
-  list(limit?: number) {
-    return limit ? this.repos.list(limit) : this.repos.list();
+  async list(limit?: number) {
+    return limit ? await this.repos.list(limit) : await this.repos.list();
   }
 
-  findById(id: number) {
-    return this.repos.find(id);
+  async findById(id: number) {
+    return await this.repos.find(id);
   }
 
-  create(newMemoLink: MemoLink) {
-    return this.repos.create(newMemoLink);
+  async create(newMemoLink: MemoLink) {
+    const { siteName, title, description, ogpUri } = await getHeadOfLink(
+      newMemoLink.linkUri
+    );
+
+    const saveData: MemoLink = {
+      ...newMemoLink,
+      siteName,
+      linkTitle: title,
+      linkDescription: description,
+      ogpUri,
+    };
+
+    return await this.repos.create(saveData);
   }
 }
 

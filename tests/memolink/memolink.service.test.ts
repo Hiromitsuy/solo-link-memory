@@ -2,6 +2,9 @@ import { describe, afterEach, it, expect, vi } from 'vitest';
 import MemoLinkService from '@/memolink/memolink.service';
 import MemoLinkRepository from '@root/src/memolink/memolink.repository';
 import MemoLink from '@root/src/model/MemoLinkModel';
+import getHeadOfLink from '@root/src/tools/getHeadOfLink';
+
+vi.mock('@/tools/getHeadOfLink');
 
 describe('memolink service', () => {
   const mockRepos: MemoLinkRepository = {
@@ -56,19 +59,63 @@ describe('memolink service', () => {
   });
 
   describe('create', () => {
+    const mockedGetHead = vi.mocked(getHeadOfLink);
     it('新しいMemoLinkを追加する', async () => {
+      mockedGetHead.mockResolvedValue({
+        siteName: '',
+        title: '',
+        description: '',
+        ogpUri: '',
+      });
       const insertSpy = vi.spyOn(mockRepos, 'create');
-      const nowDatetime = new Date();
       const newMemoLink: MemoLink = {
         id: 1,
         linkUri: 'https://example.com/',
         memo: 'sample memo',
-        createdAt: nowDatetime,
-        updatedAt: nowDatetime,
+        siteName: '',
+        linkTitle: '',
+        linkDescription: '',
+        ogpUri: '',
       };
       await service.create(newMemoLink);
 
       expect(insertSpy).toHaveBeenCalledWith(newMemoLink);
+    });
+
+    it('追加するリンク先の情報を取得してDBへ保存する', async () => {
+      mockedGetHead.mockResolvedValue({
+        siteName: 'sample',
+        title: 'sample title',
+        description: 'sample description string',
+        ogpUri: 'sample image uri',
+      });
+      const insertSpy = vi.spyOn(mockRepos, 'create');
+      const newMemoLink: MemoLink = {
+        id: 1,
+        linkUri: 'https://example.com/',
+        memo: 'sample memo',
+      };
+      await service.create(newMemoLink);
+
+      expect(insertSpy).toHaveBeenCalledWith({
+        ...newMemoLink,
+        siteName: 'sample',
+        linkTitle: 'sample title',
+        linkDescription: 'sample description string',
+        ogpUri: 'sample image uri',
+      });
+    });
+
+    it('URIが正しい形式じゃない時にエラーを返す', async () => {
+      vi.mocked(getHeadOfLink).mockRejectedValue('URL Parse Error');
+      const newMemoLink: MemoLink = {
+        id: 1,
+        linkUri: 'example',
+        memo: 'sample memo',
+      };
+      expect(service.create(newMemoLink)).rejects.toThrowError(
+        'URL Parse Error'
+      );
     });
   });
 });

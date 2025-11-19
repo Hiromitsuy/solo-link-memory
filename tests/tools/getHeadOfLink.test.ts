@@ -2,11 +2,8 @@ import getHeadOfLink from '@root/src/tools/getHeadOfLink';
 import { describe, expect, it, vi } from 'vitest';
 
 import { JSDOM } from 'jsdom';
+import { afterEach } from 'node:test';
 vi.mock('jsdom');
-const mockDom = { fromURL: vi.fn() };
-
-const htmlStringFormat =
-  '<!doctype html><html lang="en"><head>{HEAD}</head><body></body></html>';
 
 describe('getHeadOfLink', () => {
   const mockJSDomInstance = {
@@ -19,21 +16,22 @@ describe('getHeadOfLink', () => {
       },
     },
   };
+
+  afterEach(() => {
+    vi.resetAllMocks();
+  });
+
   it('should access target link and get Head information', async () => {
     const fetchSpy = vi
       .spyOn(JSDOM, 'fromURL')
       .mockResolvedValue(mockJSDomInstance as any);
-    await getHeadOfLink('sample/url');
+    await getHeadOfLink('http://example.com');
 
-    expect(fetchSpy).toBeCalledWith('sample/url');
+    expect(fetchSpy).toBeCalledWith('http://example.com');
     //   'https://imageflux.sakura.ad.jp/column/ogp-images/',
   });
 
   it('get title in <title> on target page, description and ogpUri is not defined.', async () => {
-    const definedInTitleTag = htmlStringFormat.replace(
-      '{HEAD}',
-      '<title>Example Title</title>'
-    );
     vi.mocked(JSDOM.fromURL).mockResolvedValue(mockJSDomInstance as any);
     vi.mocked(mockJSDomInstance.window.document.querySelector).mockReturnValue({
       text: 'Example Title',
@@ -51,17 +49,9 @@ describe('getHeadOfLink', () => {
   });
 
   it('get og property in meta tags', async () => {
-    const definedInTitleTag = htmlStringFormat.replace(
-      '{HEAD}',
-      '<meta property="og:site_name" content="さくらインターネット" />' +
-        '<meta property="og:title" content=" OGP画像とは？設定方法や表示の確認方法・推奨サイズを解説" />' +
-        '<meta property="og:url" content=" https://cloud.sakura.ad.jp/column/ogp/" />' +
-        '<meta property="og:image" content=" https://cloud.sakura.ad.jp/column/ogp.jpg" />' +
-        '<meta property="og:description" content="description" />'
-    );
     vi.mocked(JSDOM.fromURL).mockResolvedValue(mockJSDomInstance as any);
     const metadata = [
-      { name: '', property: 'og:site_name', content: '' },
+      { name: '', property: 'og:site_name', content: 'さくらインターネット' },
       {
         name: '',
         property: 'og:title',
@@ -88,7 +78,7 @@ describe('getHeadOfLink', () => {
       })
     );
 
-    const { title, description, ogpUri } =
+    const { title, description, ogpUri, siteName } =
       await getHeadOfLink('http://example.com');
 
     expect(title).toBe(
@@ -96,5 +86,15 @@ describe('getHeadOfLink', () => {
     );
     expect(description).toBe('description');
     expect(ogpUri).toBe('https://cloud.sakura.ad.jp/column/ogp.jpg');
+    expect(siteName).toBe('さくらインターネット');
+  });
+
+  it('should throw error, cannot parse URL', () => {
+    vi.mocked(JSDOM.fromURL).mockResolvedValue(mockJSDomInstance as any);
+    vi.mocked(
+      mockJSDomInstance.window.document.querySelectorAll
+    ).mockReturnValue([]);
+
+    expect(getHeadOfLink('example')).rejects.toThrow('URL Parse Error');
   });
 });
