@@ -16,7 +16,6 @@ export default class MemoLinkController {
       sortByLatest: true,
       includePublic: true,
     });
-    console.log(list);
     res.setHeader('Content-Type', 'application/json');
     res.json(list);
   };
@@ -39,10 +38,8 @@ export default class MemoLinkController {
       userId: req.user.user_id,
       isPublic: false,
     };
-    console.log(newData, req.user);
 
     const createdItem = await this.service.create(newData);
-    console.log(createdItem);
     res.setHeader('Content-Type', 'application/json');
     res.status(201).json({ data: createdItem });
   };
